@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dynamoprofile
+    username: postgres
+    password: ziP@ss
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate.ddl-auto: create-drop
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: weaver
+            client-secret: ZrJO0Dry95mcTOgT4WwnBMyN3zq0mSbE
+            authorization-grant-type: authorization_code
+            scope: openid
+            provider: keycloak
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8095/realms/webservices
+            user-name-attribute: client_id
+
+      resourceserver:
+        jwt:
+          jwt-set-uri: http://localhost:8095/realms/webservices/protocol/openid-connect/token
+          jwk-set-uri: http://localhost:8095/realms/webservices/protocol/openid-connect/certs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [
+          "health",
+          "prometheus"
+        ]
+
+logging:
+  level:
+    org.springframework.boot: error
+    org.springframework.security: debug
+    org.springframework.security.web: debug
+    org.apache.catalina: error
+    com.mainul35:
+      - info
+      - trace
+      - debug
+      - error
+dozer:
+  mapping-files: classpath*:/dozer-mapping/*mapping.xml

@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dynamoprofile
+    username: postgres
+    password: ziP@ss
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate.ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: servo
+            client-secret: HymXxCwTAtqUr4dDpqgNRaPKhJwgJT4L
+            authorization-grant-type: client_credentials
+            scope: openid
+            provider: external
+          external:
+            provider: external
+            client-id: external-client
+            client-secret: put your client secret here)
+            scope: openid,offline_access,profile
+            authorization-grant-type: authorization_code
+
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:8095/realms/webservices/protocol/openid-connect/token
+          user-name-attribute: abmashile
+
+
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]

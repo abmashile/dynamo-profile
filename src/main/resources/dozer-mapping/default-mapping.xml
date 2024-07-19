@@ -1,0 +1,7 @@
+<mapping>
+    <class-a>za.co.androman.dynamoprofile.services.integration.User</class-a>
+    <class-b bean-factory="com.github.dozermapper.core.factory.JAXBBeanFactory">
+        za.co.androman.dynamoprofile.services.integration.User
+    </class-b>
+</mapping>
+
