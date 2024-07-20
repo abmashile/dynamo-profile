@@ -6,22 +6,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.androman.dynamoprofile.services.AssessmentQuestionService;
-import za.co.androman.dynamoprofile.services.AssessmentService;
 import za.co.androman.dynamoprofile.services.controller.integration.AssessmentQuestion;
-import za.co.androman.dynamoprofile.services.integration.tranformers.DefaultTransformer;
+import za.co.androman.dynamoprofile.services.integration.tranformers.CustomDTOMapper;
+import za.co.androman.dynamoprofile.services.integration.tranformers.DTOMapper;
 
 import java.util.Objects;
 
 @RestController
 @RequestMapping(value="/question")
 public class AssessmentQuestionController {
-    private DefaultTransformer transformer;
+    private DTOMapper transformer;
     private final AssessmentQuestionService assessmentQuestionService;
 
     @Autowired
     public AssessmentQuestionController(AssessmentQuestionService assessmentQuestionService,
-                                        AssessmentService assessmentService,
-                                        DefaultTransformer transformer){
+                                        CustomDTOMapper transformer){
         this.assessmentQuestionService = assessmentQuestionService;
         this.transformer = transformer;
     }

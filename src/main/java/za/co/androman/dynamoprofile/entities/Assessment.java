@@ -24,7 +24,7 @@ public class Assessment {
     private UserProfile userProfile;
     @ManyToOne
     private AssessmentCategory assessmentCategory;
-
+    private boolean isActive;
     @OneToMany(mappedBy = "assessment", cascade = CascadeType.ALL)
     private List<AssessmentQuestion> questions;
 

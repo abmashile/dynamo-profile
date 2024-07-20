@@ -10,7 +10,6 @@ import za.co.androman.dynamoprofile.services.UserService;
 import za.co.androman.dynamoprofile.services.controller.integration.User;
 import za.co.androman.dynamoprofile.services.integration.tranformers.CustomDTOMapper;
 import za.co.androman.dynamoprofile.services.integration.tranformers.DTOMapper;
-import za.co.androman.dynamoprofile.services.integration.tranformers.DefaultTransformer;
 
 import java.util.List;
 import java.util.Objects;

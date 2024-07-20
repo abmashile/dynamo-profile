@@ -10,6 +10,7 @@ import za.co.androman.dynamoprofile.services.controller.integration.UserProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -31,13 +32,17 @@ public class CustomDTOMapper implements DTOMapper{
 
     public User transform(za.co.androman.dynamoprofile.entities.User user){
         User extUser = orikaMapperFacade.map(user, User.class);
-        extUser.getProfiles().forEach(profile-> {
-            profile.setUser(null);
-            profile.getAssessments().forEach(assessment -> {
-                assessment.setUserProfile(null);
-                assessment.setQuestions(null);
+        if(Objects.nonNull(extUser.getProfiles())) {
+            extUser.getProfiles().forEach(profile -> {
+                profile.setUser(null);
+                if (Objects.nonNull(profile.getAssessments())) {
+                    profile.getAssessments().forEach(assessment -> {
+                        assessment.setUserProfile(null);
+                        assessment.setQuestions(null);
+                    });
+                }
             });
-        });
+        }
 
         return extUser;
     }
@@ -69,10 +74,12 @@ public class CustomDTOMapper implements DTOMapper{
     public UserProfile transform(za.co.androman.dynamoprofile.entities.UserProfile entProfile){
         UserProfile profile = orikaMapperFacade.map(entProfile, UserProfile.class);
         profile.setUser(null);
-        profile.getAssessments().forEach(assessment -> {
-            assessment.setUserProfile(null);
-            assessment.setQuestions(null);
-        });
+        if(Objects.nonNull(profile.getAssessments())) {
+            profile.getAssessments().forEach(assessment -> {
+                assessment.setUserProfile(null);
+                assessment.setQuestions(null);
+            });
+        }
         return profile;
     }
 

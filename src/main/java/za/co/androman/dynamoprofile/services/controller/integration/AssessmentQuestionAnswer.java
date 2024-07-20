@@ -19,7 +19,6 @@ import java.sql.Blob;
 public class AssessmentQuestionAnswer {
   private long id;
   private String answer;
-  @Accessors(fluent = true)
   @JsonProperty("isCorrect")
   private boolean isCorrect;
   private String description;
