@@ -30,9 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         this.log.info("Adding user {}", user);
-        this.userService.save(transformer.transform(user));
+        user  = transformer.transform(this.userService.save(transformer.transform(user)));
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{userId}")

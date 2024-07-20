@@ -23,12 +23,9 @@ public class AssessmentController {
         this.mappper = mappper;
     }
     @PostMapping(path = "/add")
-    public ResponseEntity<ServiceResponse> add(@RequestBody Assessment assessment){
-        this.assessmentService.add(mappper.transform(assessment));
-        ServiceResponse serviceResponse = new ServiceResponse();
-        HttpStatus status = HttpStatus.OK;
-        serviceResponse.setStatus(status);
-        return new ResponseEntity<>(serviceResponse, HttpStatus.OK );
+    public ResponseEntity<Assessment> add(@RequestBody Assessment assessment){
+        assessment = mappper.transform(this.assessmentService.add(mappper.transform(assessment)));
+        return new ResponseEntity<>(assessment, HttpStatus.OK );
     }
 
     @GetMapping(path = "/get/{assessmentId}")
@@ -39,11 +36,7 @@ public class AssessmentController {
     }
 
     @PostMapping(path = "/delete")
-    public ResponseEntity<ServiceResponse> delete(@RequestBody Assessment assessment){
+    public void delete(@RequestBody Assessment assessment){
         this.assessmentService.delete(mappper.transform(assessment));
-        ServiceResponse serviceResponse = new ServiceResponse();
-        HttpStatus status = HttpStatus.OK;
-        serviceResponse.setStatus(status);
-        return new ResponseEntity<>(serviceResponse, HttpStatus.OK );
     }
 }

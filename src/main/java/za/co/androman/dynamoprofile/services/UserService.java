@@ -15,22 +15,15 @@ public class UserService {
     public UserService(@Autowired UserRepository userRepository){
         this.userRepository = userRepository;
     }
-    public void save(User user){
-        this.userRepository.save(user);
+    public User save(User user){
+        return this.userRepository.save(user);
     }
-
     public void delete(User user){
         this.userRepository.delete(user);
     }
-
-    public void save(Collection<User> users){
-        this.userRepository.saveAll(users);
-    }
-
     public User get(long id){
         return this.userRepository.findById(id).orElse(null);
     }
-
     public List<User> getAll() {
         return this.userRepository.findAll();
     }

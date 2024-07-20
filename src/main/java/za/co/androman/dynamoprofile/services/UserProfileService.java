@@ -22,19 +22,19 @@ public class UserProfileService {
     }
 
 
-    public void add(UserProfile userProfile){
+    public UserProfile add(UserProfile userProfile){
         log.info("Adding profile to db : "+userProfile);
         User user = userService.get(userProfile.getUser().getUserId());
         userProfile.setUser(user);
-        this.userProfileRepository.save(userProfile);
+        return this.userProfileRepository.save(userProfile);
     }
 
     public void delete(UserProfile userProfile){
         this.userProfileRepository.delete(userProfile);
     }
 
-    public void update(UserProfile userProfile){
-        this.delete(userProfile);
+    public UserProfile update(UserProfile userProfile){
+        return this.add(userProfile);
     }
 
     public UserProfile find(Long profileId){
