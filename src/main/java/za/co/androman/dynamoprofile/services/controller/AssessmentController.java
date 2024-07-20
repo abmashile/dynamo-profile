@@ -7,42 +7,40 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.androman.dynamoprofile.services.AssessmentService;
 import za.co.androman.dynamoprofile.services.controller.integration.Assessment;
-import za.co.androman.dynamoprofile.services.controller.integration.ServiceResponse;
-import za.co.androman.dynamoprofile.services.integration.tranformers.DefaultTransformer;
+import za.co.androman.dynamoprofile.services.integration.tranformers.CustomDTOMapper;
+import za.co.androman.dynamoprofile.services.integration.tranformers.DTOMapper;
 
 @RestController
 @RequestMapping(path = "/assessment")
 public class AssessmentController {
 
     private final AssessmentService assessmentService;
-    private final DefaultTransformer transformer;
+    private final DTOMapper mappper;
     @Autowired
     public AssessmentController(AssessmentService assessmentService,
-                                DefaultTransformer transformer){
+                                CustomDTOMapper mappper){
         this.assessmentService = assessmentService;
-        this.transformer = transformer;
+        this.mappper = mappper;
     }
     @PostMapping(path = "/add")
     public ResponseEntity<ServiceResponse> add(@RequestBody Assessment assessment){
-        this.assessmentService.add(transformer.transform(assessment));
+        this.assessmentService.add(mappper.transform(assessment));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK );
     }
 
-    @GetMapping(path = "/update")
-    public ResponseEntity<ServiceResponse> update(@RequestBody Assessment assessment){
-        this.assessmentService.update(transformer.transform(assessment));
-        ServiceResponse serviceResponse = new ServiceResponse();
+    @GetMapping(path = "/get/{assessmentId}")
+    public ResponseEntity<Assessment> update(@PathVariable("assessmentId") Long assessmentId){
+        Assessment assessment = this.mappper.transform(this.assessmentService.findById(assessmentId));
         HttpStatus status = HttpStatus.OK;
-        serviceResponse.setStatus(status);
-        return new ResponseEntity<>(serviceResponse, HttpStatus.OK );
+        return new ResponseEntity<>(assessment, status);
     }
 
     @PostMapping(path = "/delete")
     public ResponseEntity<ServiceResponse> delete(@RequestBody Assessment assessment){
-        this.assessmentService.delete(transformer.transform(assessment));
+        this.assessmentService.delete(mappper.transform(assessment));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);

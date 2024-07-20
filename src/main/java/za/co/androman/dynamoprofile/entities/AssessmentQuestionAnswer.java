@@ -1,12 +1,11 @@
 package za.co.androman.dynamoprofile.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.sql.Blob;
 
@@ -14,13 +13,16 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Table(name = "answer")
 public class AssessmentQuestionAnswer {
   @Id
-  private long id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
   private String answer;
+  private boolean isCorrect;
   private String description;
-  @OneToOne
+  @ManyToOne
   private AssessmentQuestion question;
   private Blob image;
 }

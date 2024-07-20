@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,15 +16,14 @@ import java.sql.Blob;
 @Table(name = "question")
 public class AssessmentQuestion {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String question;
     private String description;
-    @Column
     private Blob image;
     private boolean isImageBeforeDescription;
-    @OneToOne
-    private AssessmentQuestionAnswer answer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+    private List<AssessmentQuestionAnswer> answers;
     @ManyToOne
     private Assessment assessment;
 }

@@ -1,5 +1,6 @@
 package za.co.androman.dynamoprofile.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.co.androman.dynamoprofile.entities.Assessment;
@@ -9,6 +10,7 @@ import za.co.androman.dynamoprofile.repositories.AssessmentRepository;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AssessmentService {
     @Autowired
     private AssessmentRepository assessmentRepository;
@@ -21,6 +23,8 @@ public class AssessmentService {
     }
 
     public Assessment add(Assessment assessment){
+        log.info("Saving assessment : {}", assessment);
+
         return assessmentRepository.save(assessment);
     }
 

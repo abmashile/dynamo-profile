@@ -2,6 +2,7 @@ package za.co.androman.dynamoprofile.configuration;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,4 +18,11 @@ public class DefaultApplicationConfiguration {
         Mapper mapper = DozerBeanMapperBuilder.buildDefault();
         return mapper;
     }
+
+    public void orikaMapper(){
+        DefaultMapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+    }
+
+
+
 }

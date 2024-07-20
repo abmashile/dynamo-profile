@@ -6,25 +6,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.androman.dynamoprofile.services.UserProfileService;
-import za.co.androman.dynamoprofile.services.controller.integration.ServiceResponse;
 import za.co.androman.dynamoprofile.services.controller.integration.UserProfile;
-import za.co.androman.dynamoprofile.services.integration.tranformers.DefaultTransformer;
+import za.co.androman.dynamoprofile.services.integration.tranformers.CustomDTOMapper;
+import za.co.androman.dynamoprofile.services.integration.tranformers.DTOMapper;
 
 @RestController
 @RequestMapping(path = "/profile")
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
-    private final DefaultTransformer transformer;
+    private final DTOMapper mapper;
+
     @Autowired
     public UserProfileController(UserProfileService userProfileService,
-                                 DefaultTransformer transformer){
+                                 CustomDTOMapper mapper){
         this.userProfileService = userProfileService;
-        this.transformer = transformer;
+        this.mapper = mapper;
     }
     @PostMapping(path = "/add")
-    public ResponseEntity<ServiceResponse> add(@RequestBody UserProfile assessment){
-        this.userProfileService.add(transformer.transform(assessment));
+    public ResponseEntity<ServiceResponse> add(@RequestBody UserProfile userProfile){
+        this.userProfileService.add(mapper.transform(userProfile));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);
@@ -33,7 +34,7 @@ public class UserProfileController {
 
     @GetMapping(path = "/update")
     public ResponseEntity<ServiceResponse> update(@RequestBody UserProfile assessment){
-        this.userProfileService.update(transformer.transform(assessment));
+        this.userProfileService.update(mapper.transform(assessment));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);
@@ -42,7 +43,7 @@ public class UserProfileController {
 
     @PostMapping(path = "/delete")
     public ResponseEntity<ServiceResponse> delete(@RequestBody UserProfile assessment){
-        this.userProfileService.delete(transformer.transform(assessment));
+        this.userProfileService.delete(mapper.transform(assessment));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);
@@ -50,9 +51,9 @@ public class UserProfileController {
     }
 
 
-    @GetMapping(path = "/{profileId}")
+    @GetMapping(path = "/get/{profileId}")
     public ResponseEntity<UserProfile> get(@PathVariable("profileId") Long profileId){
-        UserProfile userProfile = transformer.transform(this.userProfileService.find(profileId));
+        UserProfile userProfile = mapper.transform(this.userProfileService.find(profileId));
         ServiceResponse serviceResponse = new ServiceResponse();
         HttpStatus status = HttpStatus.OK;
         serviceResponse.setStatus(status);
