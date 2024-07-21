@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.List;
 
@@ -27,5 +24,4 @@ public class Assessment {
     private boolean isActive;
     @OneToMany(mappedBy = "assessment", cascade = CascadeType.ALL)
     private List<AssessmentQuestion> questions;
-
 }

@@ -18,6 +18,5 @@ import java.util.List;
 public class AssessmentCategory {
     private int id;
     private AssessmentCategoryType assessmentCategoryType;
-
     private List<Assessment> assessments;
 }
